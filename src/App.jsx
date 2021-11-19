@@ -14,52 +14,22 @@ const authToken = cookies.get('token')
 
 if (authToken) {
   client.connectUser({
-    id: cookies.get('userId'),
+    id: cookies.get('user_id'),
     name: cookies.get("name"),
   }, authToken);
 }
 
-const LogoutButton = ({ logout }) => (<button onClick={logout}>Logout</button>);
-
-const GetCal = ({ getCal }) => {
-  return (
-    <div>
-      <button onClick={getCal}>Get Cal</button>
-    </div>
-  )
-}
+const LogoutButton = ({ logout }) => (<button className="logout-button" onClick={logout}>Logout</button>);
 
 const App = () => {
-  const logout = (response) => {
-    // TODO: use localStorage
-    // Logs out of app by removing token from cookies
+  const logout = () => {
     cookies.remove('token');
     cookies.remove('name');
-    cookies.remove('userId');
+    cookies.remove('user_id');
     cookies.remove('code');
-    cookies.remove('googleToken');
+    // cookies.remove('googleToken');
 
     window.location.reload();
-  }
-
-  const getCal = async () => {
-    try {
-      const token = cookies.get("googleToken")
-      const url = 'https://www.googleapis.com/calendar/v3/calendars/primary/events';
-
-      const res = await fetch(url, {
-        method: 'GET',
-        headers: {
-          "Content-type": "application/json",
-          "Authorization": `Bearer ${token}`
-        }
-      }).json();
-
-      console.log("GET GCAL RESPONSE", res);
-    } catch (err) {
-      console.error(err);
-      throw new Error(err);
-    }
   }
 
   if (!authToken) return <Auth />
@@ -67,8 +37,9 @@ const App = () => {
   return (
     <div className="app__wrapper">
       <Chat client={client}>
+        <div className="sidebar">
         <LogoutButton logout={logout} />
-        <GetCal getCal={getCal} />
+        </div>
         <div>
           <ChannelContainer />
         </div>

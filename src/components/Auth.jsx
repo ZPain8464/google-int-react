@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Cookies from "universal-cookie";
-import axios from "axios";
 import GoogleLogin from "react-google-login";
 require("dotenv").config();
 
@@ -17,14 +16,12 @@ const initialState = {
 
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
-
 const Auth = () => {
   const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(true);
 
   const responseGoogle = (googleRes) => {
     const data = googleRes.profileObj;
-    console.clear()
     console.log(`Google auth response ${googleRes}`)
     const URL = `http://localhost:3001/auth/login`;
 
@@ -37,26 +34,22 @@ const Auth = () => {
       body: JSON.stringify({ data: data, token: googleRes.tokenId })
     }).then((res) => res.json()).then((userData) => {
 
-      const { name, email, token, userId, url } = userData;
-      console.log(userData)
+      const { name, email, token, user_id, url } = userData;
       cookies.set('name', name);
       cookies.set('email', email);
       cookies.set('token', token);
-      cookies.set('userId', userId);
+      cookies.set('user_id', user_id);
       window.location.assign(url)
-      // window.location.reload();
-
-
     });
   }
 
   return (
     <div className="auth__form-container">
-      <span>Sign up With Google:
+      <span><p className="signup-text">Sign Up With Google:</p>
         <div>
           <GoogleLogin
             clientId={clientId}
-            buttonText="Login"
+            buttonText="Sign In"
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
             cookiePolicy="single_host_origin"
