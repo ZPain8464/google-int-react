@@ -27,6 +27,13 @@ npm i
 
 - Run `npm start` 
 
+- Create your webhook URL:
+1. Go to your Stream dashboard
+2. Select your app
+3. Select **Chat** > **Overview** in your nav menu
+4. Under **Realtime** in the **Webhook URL** field, enter your **ngrok** URL with `/auth/handlewebhook` (e.g. `https://XXX.ngrok.io/auth/handlewebhook`)
+4. Click **Save**
+
 - See the [backend repo](https://github.com/ZPain8464/google-int-react-be) to wire up with your endpoints. 
 
 
