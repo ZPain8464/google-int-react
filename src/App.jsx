@@ -27,7 +27,6 @@ const App = () => {
     cookies.remove('name');
     cookies.remove('user_id');
     cookies.remove('code');
-    // cookies.remove('googleToken');
 
     window.location.reload();
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Cookies from "universal-cookie";
 import GoogleLogin from "react-google-login";
 require("dotenv").config();
@@ -6,19 +6,9 @@ require("dotenv").config();
 
 const cookies = new Cookies();
 
-const initialState = {
-  fullName: "",
-  email: "",
-  username: "",
-  password: "",
-  confirmPassword: "",
-}
-
 const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const Auth = () => {
-  const [form, setForm] = useState(initialState);
-  const [isSignup, setIsSignup] = useState(true);
 
   const responseGoogle = (googleRes) => {
     const data = googleRes.profileObj;
